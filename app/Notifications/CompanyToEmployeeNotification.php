@@ -11,21 +11,18 @@ class CompanyToEmployeeNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Private variabel $company
-     * Private variabel $employee
-     * Just use in construct from parse in Controller
-     */
     private $company;
     private $employee;
+    private $employeeName;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($company, $employee)
+    public function __construct($company, $employee, $employeeName)
     {
         $this->company = $company;
         $this->employee = $employee;
+        $this->employeeName = $employeeName;
     }
 
     /**
@@ -44,10 +41,11 @@ class CompanyToEmployeeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Registration Successfully!')
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', route('employee.index'))
-            ->line('Thank you for using our application!');
+                    ->from($this->company)
+                    ->line('Welcome to our Application!')
+                    ->greeting('Hello '. $this->employeeName . ' Selamat Datang!')
+                    ->action('Notification Action', route('employee.index'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

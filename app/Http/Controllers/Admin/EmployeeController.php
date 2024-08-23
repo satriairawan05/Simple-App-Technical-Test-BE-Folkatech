@@ -51,8 +51,10 @@ class EmployeeController extends Controller
         $employee->company_id = $request->company_id;
         $employee->save();
 
+        $employeeName = $employee->firstname . ' ' . $employee->lastname;
+
         $company = \App\Models\Company::where('id',$employee->company_id)->first();
-        $company->notify(new CompanyToEmployeeNotification($company->email, $employee->email));
+        $company->notify(new CompanyToEmployeeNotification($company->email, $employee->email, $employeeName));
 
         return redirect()->to(route('employee.index'))->with('success','Data '. $employee->email . ' Berhasil di tambahkan!');
     }
