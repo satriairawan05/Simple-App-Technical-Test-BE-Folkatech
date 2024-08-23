@@ -131,7 +131,7 @@ class EmployeeTest extends TestCase
         $response->assertSessionHas('success', 'Data ' . $updatedData['email'] . ' Berhasil di ubah!');
     }
 
-    public function it_can_delete_employee_data()
+    public function test_it_can_delete_employee_data()
     {
         // Arrange: Buat data karyawan
         $employee = Employee::factory()->create();
