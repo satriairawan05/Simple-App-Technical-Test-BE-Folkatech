@@ -133,8 +133,9 @@ class EmployeeTest extends TestCase
 
     public function test_it_can_delete_employee_data()
     {
-        // Arrange: Buat data karyawan
-        $employee = Employee::factory()->create();
+        // Arrange: Buat data perusahaan dan karyawan
+        $company = Company::factory()->create();
+        $employee = Employee::factory()->create(['company_id' => $company->id]);
 
         // Act: Kirim permintaan DELETE ke rute penghapusan
         $response = $this->delete(route('employee.destroy', $employee->id));
